@@ -28,3 +28,19 @@ add network=192.168.1.0/24
 /routing bgp peer
 add name=Peer1-Ke-MiktrotikA remote-address=172.16.1.1 remote-as=65001
 add name=Peer2-Ke-MiktrotikC remote-address=192.168.1.2 remote-as=65003
+/interface gre
+add name=gre2-local-remote1 local-address=172.16.1.2 remote-address=172.16.1.1
+add name=gre2-local-remote3 local-address=192.168.1.1 remote-address=192.168.1.2
+
+/ip address
+add address=192.168.100.2/30 interface=gre2-local-remote1 network=192.168.100.0
+add address=192.168.102.1/30 interface=gre2-local-remote3 network=192.168.102.0
+
+/routing bgp network
+add network=192.168.100.0/30
+add network=192.168.102.0/30
+
+/routing bgp peer
+add name=peer-tunnel-to-router1 remote-address=192.168.100.1 remote-as=65001
+add name=peer-tunnel-to-router3 remote-address=192.168.102.2 remote-as=65003
+
