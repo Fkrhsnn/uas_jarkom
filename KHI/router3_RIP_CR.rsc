@@ -28,3 +28,15 @@ add network=11.11.11.0/24
 add network=192.168.3.0/24
 /system identity
 set name="R 3"
+
+/interface gre
+add name=tunnel2 local-address=11.11.11.2 remote-address=11.11.11.1
+add name=tunnel3 local-address=10.10.10.2 remote-address=10.10.10.1
+
+/ip address
+add address=10.2.0.2/30 interface=tunnel2 network=10.2.0.0
+add address=10.3.0.2/30 interface=tunnel3 network=10.3.0.0
+
+/ip route
+add dst-address=192.168.1.0/24 gateway=10.2.0.1
+add dst-address=192.168.2.0/24 gateway=10.3.0.1
