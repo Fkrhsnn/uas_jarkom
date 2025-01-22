@@ -22,6 +22,18 @@ add address=192.168.1.1/28 comment=LAN interface=ether2 network=192.168.1.0
 add address=172.16.16.1 interface=loopback network=172.16.16.1
 /ip dhcp-server network
 add address=192.168.1.0/28 gateway=192.168.1.1
+/interface gre
+add name=tunnel1 local-address=192.168.0.1 remote-address=192.168.0.2
+add name=tunnel2 local-address=192.168.0.1 remote-address=192.168.0.6
+
+/ip address
+add address=10.0.0.1/30 interface=tunnel1 network=10.0.0.0
+add address=10.0.0.5/30 interface=tunnel2 network=10.0.0.4
+
+/routing ospf network
+add area=backbone comment="Tunnel ke Router 2" network=10.0.0.0/30
+add area=backbone comment="Tunnel ke Router 3" network=10.0.0.4/30
+
 /routing ospf network
 add area=backbone comment=Loopback network=172.16.16.1/32
 add area=backbone comment=koneksi_ke_router2 network=192.168.0.0/30
