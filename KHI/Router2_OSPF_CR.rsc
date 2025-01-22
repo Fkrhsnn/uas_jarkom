@@ -30,3 +30,15 @@ add area=backbone comment=Loopback network=172.16.16.2/32
 add area=backbone comment=koneksi_ke_router1 network=192.168.0.0/30
 add area=backbone comment=koneksi_ke_router3 network=192.168.0.4/30
 add area=backbone comment=LAN network=192.168.1.16/28
+
+/interface gre
+add name=tunnel1 local-address=192.168.0.2 remote-address=192.168.0.1
+add name=tunnel2 local-address=192.168.0.5 remote-address=192.168.0.6
+
+/ip address
+add address=10.0.0.2/30 interface=tunnel1 network=10.0.0.0
+add address=10.0.2.1/30 interface=tunnel2 network=10.0.2.0
+
+/routing ospf network
+add area=backbone comment="GRE Tunnel to Router 1" network=10.0.0.0/30
+add area=backbone comment="GRE Tunnel to Router 3" network=10.0.2.0/30
