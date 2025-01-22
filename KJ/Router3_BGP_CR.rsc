@@ -31,3 +31,19 @@ add name="peer1-Ke-Router 1" remote-address=10.10.10.1 remote-as=65001
 add name="peer2-Ke-Router 2" remote-address=192.168.1.1 remote-as=65002
 /system identity
 set name="Router 3"
+
+/interface gre
+add name=tunnel2 local-address=10.10.10.2 remote-address=10.10.10.1
+add name=tunnel3 local-address=192.168.1.2 remote-address=192.168.1.1
+
+/ip address
+add address=192.168.101.2/30 interface=tunnel2 network=192.168.101.0
+add address=192.168.102.2/30 interface=tunnel3 network=192.168.102.0
+
+/routing bgp network
+add network=192.168.101.0/30
+add network=192.168.102.0/30
+
+/routing bgp peer
+add name=peer1-tunnel2 remote-address=192.168.101.1 remote-as=65001
+add name=peer2-tunnel3 remote-address=192.168.102.1 remote-as=65002
