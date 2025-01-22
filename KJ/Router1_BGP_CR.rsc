@@ -31,3 +31,19 @@ add name=peer1-ke-mkrotik2 remote-address=172.16.1.2 remote-as=65002
 add name=peer2-ke-mikrotik3 remote-address=10.10.10.2 remote-as=65003
 /system identity
 set name="Router 1"
+
+/interface gre
+add name=tunnel1 local-address=172.16.1.1 remote-address=172.16.1.2
+add name=tunnel2 local-address=10.10.10.1 remote-address=10.10.10.2
+
+/ip address
+add address=192.168.100.1/30 interface=tunnel1 network=192.168.100.0
+add address=192.168.101.1/30 interface=tunnel2 network=192.168.101.0
+
+/routing bgp network
+add network=192.168.100.0/30
+add network=192.168.101.0/30
+
+/routing bgp peer
+add name=peer2-tunnel1 remote-address=192.168.100.2 remote-as=65002
+add name=peer3-tunnel2 remote-address=192.168.101.2 remote-as=65003
