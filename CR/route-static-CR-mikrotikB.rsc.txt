@@ -19,6 +19,7 @@ add address=192.168.20.0/24 gateway=192.168.20.1
 /ip route
 add distance=1 dst-address=192.168.10.0/24 gateway=192.168.100.2
 add distance=1 dst-address=192.168.30.0/24 gateway=192.168.100.2
+
 /interface gre
 add name=tunnel1 local-address=192.168.100.1 remote-address=192.168.100.2
 add name=tunnel3 local-address=192.168.100.1 remote-address=192.168.200.2
